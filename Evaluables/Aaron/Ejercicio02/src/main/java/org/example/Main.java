@@ -20,8 +20,8 @@ public class Main {
                 BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(rutaFileMusica));
 
                 for (File file : listaRuta) {
-                    String rutaRelativa = rutaMP3.toURI().relativize(file.toURI()).getPath();
-                    bufferedWriter.write(rutaRelativa + " ");
+                    String rutaAbsoluta = file.getAbsolutePath();
+                    bufferedWriter.write(rutaAbsoluta + " ");
                 }
                 bufferedWriter.close();
             }
@@ -42,5 +42,14 @@ public class Main {
         }
 
 
+    }
+
+
+    public static void menu(){
+
+        System.out.println("** GESTION DE MUSICA MP3 **");
+        System.out.println("1. Leer Info. MP3");
+        System.out.println("2. Escribir info. MP·");
+        System.out.println("3. Salir");
     }
 }
