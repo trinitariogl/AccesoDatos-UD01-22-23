@@ -1,9 +1,6 @@
 package org.example;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.*;
 
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
@@ -15,7 +12,29 @@ public class Main {
             }
 
             File rutaMP3 = new File("src/main/resources/musica");
-            File [] listaRuta = rutaMP3.listFiles();
+
+
+            if(rutaMP3.exists() && rutaMP3.isDirectory()){
+                File [] listaRuta = rutaMP3.listFiles();
+
+                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(rutaFileMusica));
+
+                for (File file : listaRuta) {
+                    String rutaRelativa = rutaMP3.toURI().relativize(file.toURI()).getPath();
+                    bufferedWriter.write(rutaRelativa + " ");
+                }
+                bufferedWriter.close();
+            }
+            String [] array= null;
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(rutaFileMusica));
+            String linea;
+            while((linea = bufferedReader.readLine()) != null){
+                  array = linea.split(" ");
+            }
+
+            for(String s : array){
+                System.out.println(s);
+            }
 
 
         }catch (Exception e){
