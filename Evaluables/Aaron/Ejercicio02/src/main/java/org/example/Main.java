@@ -7,7 +7,9 @@ public class Main {
 
         try {
             File rutaFileMusica = new File("src/main/resources/rutaFileMusica.txt");
-            if (!rutaFileMusica.exists()) {
+            if (rutaFileMusica.exists()) {
+                System.out.println("El file ya existe");
+            }else{
                 rutaFileMusica.createNewFile();
             }
 
