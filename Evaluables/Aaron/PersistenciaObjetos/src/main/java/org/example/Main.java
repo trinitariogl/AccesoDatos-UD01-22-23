@@ -92,7 +92,7 @@ public class Main {
                     listaPeliculas.add(pelicula);
                 }
             } catch (EOFException eofex) {
-
+                objectInputStream.close();
             }
 
         } catch (IOException ioex){
