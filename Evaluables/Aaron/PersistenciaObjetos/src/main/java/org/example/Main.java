@@ -14,18 +14,14 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         Scanner sc = new Scanner(System.in);
-        boolean repetir = false;
+        boolean repetir;
         int opcion = 0;
         String titulo;
 
-        //Pelicula pelicula = LeerDatosTeclado();
-        //InsertarObjetos(pelicula);
-//        List<Pelicula> listaDePeliculas = LeerPeliculasFichero();
-//
-//        for (Pelicula p : listaDePeliculas) {
-//            System.out.println(p.toString());
-//        }
-
+        File archivo = new File("src/main/resources/peliculas.dat");
+        if(!archivo.exists()){
+            archivo.createNewFile();
+        }
 
         System.out.println("Mi VideoClub");
         System.out.println("- - - - - - - - ");
@@ -57,7 +53,7 @@ public class Main {
 
             switch (opcion) {
                 case 1:
-                    InsertarObjetos(LeerDatosTeclado());
+                    InsertarObjetos();
                     break;
                 case 2:
                     System.out.println("Introduce el titulo de la pelicula: ");
@@ -111,7 +107,7 @@ public class Main {
 
     public static List<Pelicula> LeerPeliculasFichero() throws IOException {
 
-        List<Pelicula> listaPeliculas = new ArrayList<>();
+        List<Pelicula> listaPeliculas;
 
         try {
             listaPeliculas = new ArrayList<>();
@@ -120,13 +116,14 @@ public class Main {
             FileInputStream fileInputStream = new FileInputStream(archivo);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
-            try {
-                while (true) {
+            while (true) {
+                try {
                     Pelicula pelicula = (Pelicula) objectInputStream.readObject();
                     listaPeliculas.add(pelicula);
+                } catch (EOFException eofex) {
+                    objectInputStream.close();
+                    break;
                 }
-            } catch (EOFException eofex) {
-                objectInputStream.close();
             }
 
         } catch (IOException ioex) {
@@ -140,23 +137,20 @@ public class Main {
 
     }
 
-    public static void InsertarObjetos(Pelicula nuevaPelicula) throws IOException {
+    public static void InsertarObjetos(){
 
-
+        List<Pelicula> listaPelicula;
         try {
             File archivo = new File("src/main/resources/peliculas.dat");
-            List<Pelicula> listaPelicula = new ArrayList<>();
 
-            if (!archivo.exists()) {
-                archivo.createNewFile();
-            }else{
-                listaPelicula = LeerPeliculasFichero();
-            }
+            listaPelicula = LeerPeliculasFichero();
 
             FileOutputStream fileOutputStream = new FileOutputStream(archivo);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
-            listaPelicula.add(nuevaPelicula);
+            //nueva pelicula
+            Pelicula pelicula = LeerDatosTeclado();
+            listaPelicula.add(pelicula);
 
             objectOutputStream.writeObject(listaPelicula);
             objectOutputStream.close();
@@ -169,8 +163,9 @@ public class Main {
         }
     }
 
-    public static void modificarPelicula(String tituloPelicula) throws IOException{
+    public static void modificarPelicula(String tituloPelicula){
 
+        List<Pelicula> listaPelicula;
         try {
             Scanner sc = new Scanner(System.in);
             String nuevoFormato;
@@ -179,8 +174,6 @@ public class Main {
             File archivo = new File("src/main/resources/peliculas.dat");
             FileOutputStream fileOutputStream = new FileOutputStream(archivo);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-
-            List<Pelicula> listaPelicula = new ArrayList<>();
 
             listaPelicula = LeerPeliculasFichero();
 
@@ -196,7 +189,7 @@ public class Main {
             //escribir nueva lista
             objectOutputStream.writeObject(listaPelicula);
 
-            if (buscarPelicula != true) {
+            if (!buscarPelicula) {
                 System.out.println("La pelicula no existe.");
             }
 
@@ -210,17 +203,15 @@ public class Main {
         }
     }
 
-    public static void eliminarPelicula (String tituloPelicula){
+    public static void eliminarPelicula(String tituloPelicula) {
 
+        List<Pelicula> listaPelicula;
         try {
-            Scanner sc = new Scanner(System.in);
             boolean buscarPelicula = false;
 
             File archivo = new File("src/main/resources/peliculas.dat");
             FileOutputStream fileOutputStream = new FileOutputStream(archivo);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-
-            List<Pelicula> listaPelicula = new ArrayList<>();
 
             listaPelicula = LeerPeliculasFichero();
 
@@ -235,7 +226,7 @@ public class Main {
             //escribir nueva lista
             objectOutputStream.writeObject(listaPelicula);
 
-            if (buscarPelicula != true) {
+            if (!buscarPelicula) {
                 System.out.println("La pelicula no existe.");
             }
 
@@ -250,25 +241,24 @@ public class Main {
 
     }
 
-    public static void VisualizarPelicula (String tituloPelicula) throws IOException {
+    public static void VisualizarPelicula(String tituloPelicula){
+
+        List<Pelicula> listaPelicula;
         try {
-            Scanner sc = new Scanner(System.in);
             boolean buscarPelicula = false;
 
-            File archivo = new File("src/main/resources/peliculas.dat");
-            List<Pelicula> listaPelicula = new ArrayList<>();
 
             listaPelicula = LeerPeliculasFichero();
 
             for (Pelicula pelicula : listaPelicula) {
                 if (pelicula.getTitulo().equalsIgnoreCase(tituloPelicula)) {
-                    System.out.println(pelicula.toString());
-                    buscarPelicula= true;
+                    System.out.println(pelicula);
+                    buscarPelicula = true;
                     break;
                 }
             }
 
-            if (buscarPelicula != true) {
+            if (!buscarPelicula) {
                 System.out.println("La pelicula no existe.");
             }
 
