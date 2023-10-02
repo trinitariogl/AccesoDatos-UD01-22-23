@@ -17,6 +17,10 @@ public class Main {
          Pelicula p = leerDatosTeclado();
          insertarObjeto(p);
 
+
+
+
+        //Mostrar las películas
         List<Pelicula> pelis =  leerPeliculasFichero();
         for (Pelicula peli: pelis){
             System.out.println(peli);
@@ -30,7 +34,8 @@ public class Main {
         Pelicula peli = new Pelicula();
 
         System.out.print("Introduzca el título: ");
-        peli.setTitulo(sc.nextLine());
+        String tit = sc.nextLine();
+        peli.setTitulo(tit);
 
         System.out.print("Introduzca actores: ");
         peli.setActores(Arrays.asList(sc.nextLine().split(";")));
