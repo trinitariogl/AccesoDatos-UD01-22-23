@@ -3,10 +3,7 @@ package org.example;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
@@ -15,14 +12,43 @@ public class Main {
     public static void main(String[] args) throws IOException {
         //Peliculas pelicula=leerDatosTeclado();
         //InsertarObjeto(pelicula);
-        List<Peliculas>peliculass=LeerPeliculasFichero();
-        for (Peliculas pel:peliculass){
-            System.out.println(pel.toString());
-        }
-              {
+        menu menu = new menu();
+        int opcion;
+        do {
+            menu.mostrar();
+            opcion = menu.leer();
 
-        }
+            switch (opcion) {
+                case 1:
+                    System.out.println("Numero de peliculas: ");
+                    int numero=sc.nextInt();
+                    for (int i=0; i<=numero; i++) {
+                        InsertarObjeto(leerDatosTeclado());
+                    }
+                    break;
+                case 2:
+                    ModificarPelicula();
+                    break;
+                case 3:
+                    EliminarPelicula();
+                    break;
+                case 4:
+                    List<Peliculas>peliculass=LeerPeliculasFichero();
+                    for (Peliculas pel:peliculass){
+                        System.out.println(pel.toString());
+                    }
+                    break;
+            }
+        } while (opcion != 0);
+
+
+
+
     }
+
+
+
+
     public static Peliculas leerDatosTeclado(){
         DateTimeFormatter formatter=DateTimeFormatter.ofPattern("dd/MM/yyyy");
         Peliculas pelicula=new Peliculas();
@@ -58,6 +84,87 @@ public class Main {
         }
 }
 
+
+    private static void ModificarPelicula() throws IOException {
+        List<Peliculas> peliculas = LeerPeliculasFichero();
+        if (peliculas != null && !peliculas.isEmpty()) {
+            Scanner input = new Scanner(System.in);
+
+            System.out.println("Introduce el título de la película que deseas modificar: ");
+            String tituloBusqueda = input.nextLine();
+
+            boolean encontrada = false;
+
+            for (int i = 0; i < peliculas.size(); i++) {
+                Peliculas pelicula = peliculas.get(i);
+                if (pelicula.getTitulo().equalsIgnoreCase(tituloBusqueda)) {
+                    Peliculas nuevaPelicula = leerDatosTeclado();
+                    peliculas.set(i, nuevaPelicula);
+                    encontrada = true;
+                    break;
+                }
+            }
+
+            if (!encontrada) {
+                System.out.println("Película no encontrada.");
+            } else {
+                try {
+                    FileOutputStream fileout = new FileOutputStream("src/main/resources/peliculas.dat");
+                    ObjectOutputStream objectout = new ObjectOutputStream(fileout);
+                    for (Peliculas pelicula : peliculas) {
+                        objectout.writeObject(pelicula);
+                    }
+                    objectout.close();
+                    System.out.println("Película modificada con éxito.");
+                } catch (IOException ex) {
+                    System.out.println("Error al escribir en el archivo.");
+                }
+            }
+        } else {
+            System.out.println("No hay películas en la lista.");
+        }
+    }
+
+    private static void EliminarPelicula() throws IOException {
+        List<Peliculas> peliculas = LeerPeliculasFichero();
+        if (peliculas != null && !peliculas.isEmpty()) {
+            Scanner input = new Scanner(System.in);
+
+            System.out.println("Introduce el título de la película que deseas eliminar: ");
+            String tituloBusqueda = input.nextLine();
+
+            boolean encontrada = false;
+
+            Iterator<Peliculas> iterator = peliculas.iterator();
+            while (iterator.hasNext()) {
+                Peliculas pelicula = iterator.next();
+                if (pelicula.getTitulo().equalsIgnoreCase(tituloBusqueda)) {
+                    iterator.remove();
+                    encontrada = true;
+                    break;
+                }
+            }
+
+            if (!encontrada) {
+                System.out.println("Película no encontrada.");
+            } else {
+                // Actualizar el archivo sin la película eliminada
+                try {
+                    FileOutputStream fileout = new FileOutputStream("src/main/resources/peliculas.dat");
+                    ObjectOutputStream objectout = new ObjectOutputStream(fileout);
+                    for (Peliculas pelicula : peliculas) {
+                        objectout.writeObject(pelicula);
+                    }
+                    objectout.close();
+                    System.out.println("Película eliminada con éxito.");
+                } catch (IOException ex) {
+                    System.out.println("Error al escribir en el archivo.");
+                }
+            }
+        } else {
+            System.out.println("No hay películas en la lista.");
+        }
+    }
 public static List<Peliculas> LeerPeliculasFichero() throws IOException {
         List<Peliculas>ListaPeliculas=null;
         try {
