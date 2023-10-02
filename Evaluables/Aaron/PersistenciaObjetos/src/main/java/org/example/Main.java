@@ -16,36 +16,20 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         boolean repetir = false;
         int opcion = 0;
+        String titulo;
+
         //Pelicula pelicula = LeerDatosTeclado();
         //InsertarObjetos(pelicula);
-        List<Pelicula> listaDePeliculas = LeerPeliculasFichero();
-
-        for (Pelicula p : listaDePeliculas) {
-            System.out.println(p.toString());
-        }
+//        List<Pelicula> listaDePeliculas = LeerPeliculasFichero();
+//
+//        for (Pelicula p : listaDePeliculas) {
+//            System.out.println(p.toString());
+//        }
 
 
         System.out.println("Mi VideoClub");
         System.out.println("- - - - - - - - ");
         do {
-            do {
-
-                System.out.println("Seleccione una opcion: ");
-                opcion = sc.nextInt();
-                if (!sc.hasNextInt()) {
-                    System.out.println("debe introducir un numero.");
-                    repetir = false;
-                } else {
-                    if (opcion < 1 || opcion > 5) {
-                        System.out.println("El numero debe ser entre 1 y 5");
-                        repetir = false;
-                    } else {
-                        repetir = true;
-                    }
-                }
-
-            } while (!repetir);
-
             System.out.println("Menu: ");
             System.out.println("1. Insertar Pelicula");
             System.out.println("2. Modificar Pelicula");
@@ -53,17 +37,45 @@ public class Main {
             System.out.println("4. Visualizar Pelicula");
             System.out.println("5. Salir");
 
+            do {
+                System.out.println("Seleccione una opcion: ");
+                if (!sc.hasNextInt()) {
+                    System.out.println("debe introducir un numero.");
+                    repetir = false;
+                } else {
+                    opcion = sc.nextInt();
+                    sc.nextLine();
+                    if (opcion < 1 || opcion > 5) {
+                        System.out.println("El numero debe ser entre 1 y 5");
+                        repetir = false;
+                    } else {
+                        repetir = true;
+                    }
+                }
+            } while (!repetir);
+
+
             switch (opcion) {
                 case 1:
                     InsertarObjetos(LeerDatosTeclado());
                     break;
                 case 2:
+                    System.out.println("Introduce el titulo de la pelicula: ");
+                    titulo = sc.nextLine();
+                    modificarPelicula(titulo);
                     break;
                 case 3:
+                    System.out.println("Introduce el titulo de la pelicula");
+                    titulo = sc.nextLine();
+                    eliminarPelicula(titulo);
                     break;
                 case 4:
+                    System.out.println("Introduce el titulo de la pelicula: ");
+                    titulo = sc.nextLine();
+                    VisualizarPelicula(titulo);
                     break;
                 case 5:
+                    System.out.println("Salir.");
                     break;
             }
 
@@ -99,7 +111,7 @@ public class Main {
 
     public static List<Pelicula> LeerPeliculasFichero() throws IOException {
 
-        List<Pelicula> listaPeliculas = null;
+        List<Pelicula> listaPeliculas = new ArrayList<>();
 
         try {
             listaPeliculas = new ArrayList<>();
@@ -130,28 +142,25 @@ public class Main {
 
     public static void InsertarObjetos(Pelicula nuevaPelicula) throws IOException {
 
-        List<Pelicula> listaPelicula = new ArrayList<>();
 
         try {
             File archivo = new File("src/main/resources/peliculas.dat");
+            List<Pelicula> listaPelicula = new ArrayList<>();
 
-            if (archivo.exists()) {
-                System.out.println("El archivo ya existe.");
-            } else {
+            if (!archivo.exists()) {
                 archivo.createNewFile();
+            }else{
+                listaPelicula = LeerPeliculasFichero();
             }
 
             FileOutputStream fileOutputStream = new FileOutputStream(archivo);
-
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-
-            objectOutputStream.writeObject(nuevaPelicula);
-
-            listaPelicula = LeerPeliculasFichero();
 
             listaPelicula.add(nuevaPelicula);
 
+            objectOutputStream.writeObject(listaPelicula);
             objectOutputStream.close();
+
         } catch (IOException ioex) {
             System.out.println("Error: " + ioex.getMessage());
 
@@ -160,12 +169,112 @@ public class Main {
         }
     }
 
-    public static void modificarPelicula(){
+    public static void modificarPelicula(String tituloPelicula) throws IOException{
 
-        String nombre;
-        System.out.println("Introduce el nombre de la pelicula");
+        try {
+            Scanner sc = new Scanner(System.in);
+            String nuevoFormato;
+            boolean buscarPelicula = false;
 
+            File archivo = new File("src/main/resources/peliculas.dat");
+            FileOutputStream fileOutputStream = new FileOutputStream(archivo);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
+            List<Pelicula> listaPelicula = new ArrayList<>();
+
+            listaPelicula = LeerPeliculasFichero();
+
+            for (Pelicula pelicula : listaPelicula) {
+                if (pelicula.getTitulo().equalsIgnoreCase(tituloPelicula)) {
+                    System.out.println("Introduce el nuevo formato: ");
+                    nuevoFormato = sc.nextLine();
+                    pelicula.setFormato(nuevoFormato);
+                    buscarPelicula = true;
+                    break;
+                }
+            }
+            //escribir nueva lista
+            objectOutputStream.writeObject(listaPelicula);
+
+            if (buscarPelicula != true) {
+                System.out.println("La pelicula no existe.");
+            }
+
+            objectOutputStream.close();
+
+        } catch (IOException ioex) {
+            System.out.println("Error: " + ioex.getMessage());
+
+        } catch (Exception ex) {
+            System.out.println("ERror: " + ex.getMessage());
+        }
+    }
+
+    public static void eliminarPelicula (String tituloPelicula){
+
+        try {
+            Scanner sc = new Scanner(System.in);
+            boolean buscarPelicula = false;
+
+            File archivo = new File("src/main/resources/peliculas.dat");
+            FileOutputStream fileOutputStream = new FileOutputStream(archivo);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+
+            List<Pelicula> listaPelicula = new ArrayList<>();
+
+            listaPelicula = LeerPeliculasFichero();
+
+            for (Pelicula pelicula : listaPelicula) {
+                if (pelicula.getTitulo().equalsIgnoreCase(tituloPelicula)) {
+                    listaPelicula.remove(pelicula);
+                    buscarPelicula = true;
+                    break;
+                }
+            }
+
+            //escribir nueva lista
+            objectOutputStream.writeObject(listaPelicula);
+
+            if (buscarPelicula != true) {
+                System.out.println("La pelicula no existe.");
+            }
+
+            objectOutputStream.close();
+
+        } catch (IOException ioex) {
+            System.out.println("Error: " + ioex.getMessage());
+
+        } catch (Exception ex) {
+            System.out.println("ERror: " + ex.getMessage());
+        }
+
+    }
+
+    public static void VisualizarPelicula (String tituloPelicula) throws IOException {
+        try {
+            Scanner sc = new Scanner(System.in);
+            boolean buscarPelicula = false;
+
+            File archivo = new File("src/main/resources/peliculas.dat");
+            List<Pelicula> listaPelicula = new ArrayList<>();
+
+            listaPelicula = LeerPeliculasFichero();
+
+            for (Pelicula pelicula : listaPelicula) {
+                if (pelicula.getTitulo().equalsIgnoreCase(tituloPelicula)) {
+                    System.out.println(pelicula.toString());
+                    buscarPelicula= true;
+                    break;
+                }
+            }
+
+            if (buscarPelicula != true) {
+                System.out.println("La pelicula no existe.");
+            }
+
+        } catch (Exception ex) {
+            System.out.println("ERror: " + ex.getMessage());
+        }
 
     }
 
