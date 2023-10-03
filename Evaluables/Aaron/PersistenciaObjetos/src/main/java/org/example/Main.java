@@ -19,7 +19,7 @@ public class Main {
         String titulo;
 
         File archivo = new File("src/main/resources/peliculas.dat");
-        if(!archivo.exists()){
+        if (!archivo.exists()) {
             archivo.createNewFile();
         }
 
@@ -107,10 +107,9 @@ public class Main {
 
     public static List<Pelicula> LeerPeliculasFichero() throws IOException {
 
-        List<Pelicula> listaPeliculas;
+        List<Pelicula> listaPeliculas = new ArrayList<>();
 
         try {
-            listaPeliculas = new ArrayList<>();
 
             File archivo = new File("src/main/resources/peliculas.dat");
             FileInputStream fileInputStream = new FileInputStream(archivo);
@@ -118,13 +117,14 @@ public class Main {
 
             while (true) {
                 try {
-                    Pelicula pelicula = (Pelicula) objectInputStream.readObject();
-                    listaPeliculas.add(pelicula);
+                    listaPeliculas = (List<Pelicula>) objectInputStream.readObject();
                 } catch (EOFException eofex) {
+                    System.out.println("Error lectura: " + eofex.getMessage());
                     objectInputStream.close();
                     break;
                 }
             }
+            objectInputStream.close();
 
         } catch (IOException ioex) {
             System.out.println("Error: " + ioex.getMessage());
@@ -137,7 +137,7 @@ public class Main {
 
     }
 
-    public static void InsertarObjetos(){
+    public static void InsertarObjetos() {
 
         List<Pelicula> listaPelicula;
         try {
@@ -155,6 +155,8 @@ public class Main {
             objectOutputStream.writeObject(listaPelicula);
             objectOutputStream.close();
 
+            System.out.println(listaPelicula);
+
         } catch (IOException ioex) {
             System.out.println("Error: " + ioex.getMessage());
 
@@ -163,7 +165,7 @@ public class Main {
         }
     }
 
-    public static void modificarPelicula(String tituloPelicula){
+    public static void modificarPelicula(String tituloPelicula) {
 
         List<Pelicula> listaPelicula;
         try {
@@ -177,6 +179,7 @@ public class Main {
 
             listaPelicula = LeerPeliculasFichero();
 
+
             for (Pelicula pelicula : listaPelicula) {
                 if (pelicula.getTitulo().equalsIgnoreCase(tituloPelicula)) {
                     System.out.println("Introduce el nuevo formato: ");
@@ -186,6 +189,7 @@ public class Main {
                     break;
                 }
             }
+
             //escribir nueva lista
             objectOutputStream.writeObject(listaPelicula);
 
@@ -241,7 +245,7 @@ public class Main {
 
     }
 
-    public static void VisualizarPelicula(String tituloPelicula){
+    public static void VisualizarPelicula(String tituloPelicula) {
 
         List<Pelicula> listaPelicula;
         try {
