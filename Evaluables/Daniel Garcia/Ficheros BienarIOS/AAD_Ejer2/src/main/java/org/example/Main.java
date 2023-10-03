@@ -26,7 +26,7 @@ public class Main {
                     MP3.LeerInfoMP3(nombreArchivo);
                     break;
                 case 2:
-                    MP3.EscribitMP3(nombreArchivo);
+                    MP3.EscribirMP3(nombreArchivo);
                     break;
                 case 3:
 

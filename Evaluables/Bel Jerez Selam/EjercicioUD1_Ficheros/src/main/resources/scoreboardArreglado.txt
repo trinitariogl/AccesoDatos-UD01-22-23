@@ -1,0 +1,6 @@
+Araceli         -> 900
+Manuel          -> 153
+JOSEANTONIO_30  ->  30
+Mangel1         ->  26
+Kvothe          ->  20
+ai              ->  10
