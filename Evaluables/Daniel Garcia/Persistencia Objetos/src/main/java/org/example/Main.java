@@ -61,9 +61,10 @@ public class Main {
     public static void leerDatosTeclado(){
 
         DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        Pelicula peli = new Pelicula();
+        Pelicula peli;
         int num;
-        peliculas = leerPeliculasFichero();
+        //peliculas = leerPeliculasFichero();
+        List<Pelicula> pelis = new ArrayList<>();
 
         do {
             System.out.print("Cuantas peliculas deseas almacenar? ");
@@ -73,6 +74,7 @@ public class Main {
         sc.nextLine();
 
         for (int i = 1; i <= num; i++) {
+            peli = new Pelicula();
             System.out.println("Peliucula " + i + ":");
             System.out.print("Introduzca el título: ");
             peli.setTitulo(sc.nextLine());
@@ -88,15 +90,21 @@ public class Main {
 
             System.out.print("Introduce formato: ");
             peli.setFormato(sc.nextLine());
-            peliculas.add(peli);
+            pelis.add(peli);
         }
 
 
-        insertarObjetos();
+        insertarObjetosNuevos(pelis);
 
     }
 
-    public static void insertarObjetos() {
+    public static void insertarObjetosNuevos(List<Pelicula> p) {
+
+        peliculas = leerPeliculasFichero();
+
+        for (Pelicula peli: p){
+            peliculas.add(peli);
+        }
 
         try{
             File archivo = new File("src/main/resources/peliculas.dat");
@@ -105,8 +113,6 @@ public class Main {
             }
             FileOutputStream escritura = new FileOutputStream(archivo);
             ObjectOutputStream objectOut = new ObjectOutputStream(escritura);
-
-
 
             for (Pelicula newFilm: peliculas){
                 objectOut.writeObject(newFilm);
@@ -119,6 +125,27 @@ public class Main {
             System.out.println("Error genérico -> " + e.getMessage());
         }
 
+    }
+
+    public static void insertarObjetos(){
+        try{
+            File archivo = new File("src/main/resources/peliculas.dat");
+            if (!archivo.exists()){
+                archivo.createNewFile();
+            }
+            FileOutputStream escritura = new FileOutputStream(archivo);
+            ObjectOutputStream objectOut = new ObjectOutputStream(escritura);
+
+            for (Pelicula newFilm: peliculas){
+                objectOut.writeObject(newFilm);
+            }
+
+            objectOut.close();
+        } catch (IOException ex){
+            System.out.println("Error en fichero -> " + ex.getMessage());
+        } catch (Exception e){
+            System.out.println("Error genérico -> " + e.getMessage());
+        }
     }
 
     public static List<Pelicula> leerPeliculasFichero() {
