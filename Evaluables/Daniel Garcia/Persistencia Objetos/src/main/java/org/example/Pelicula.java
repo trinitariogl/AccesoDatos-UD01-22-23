@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class Pelicula implements Serializable {
-
     private String titulo;
     private List<String> actores;
     private List<String> directores;
