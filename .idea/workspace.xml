@@ -4,7 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8e3584d0-0c3a-4027-964f-02de31a579e0" name="Changes" comment="" />
+    <list default="true" id="52b836aa-d50e-4a95-b505-12f8d2c30654" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evaluables/PAU MACIÀ/FicherosBinarios/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evaluables/PAU MACIÀ/FicherosBinarios/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evaluables/PAU MACIÀ/FicherosBinarios/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evaluables/PAU MACIÀ/FicherosBinarios/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evaluables/PAU MACIÀ/FicherosBinarios/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evaluables/PAU MACIÀ/FicherosBinarios/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evaluables/PAU MACIÀ/FicherosBinarios/src/main/java/org/example/MP3.java" beforeDir="false" afterPath="$PROJECT_DIR$/Evaluables/PAU MACIÀ/FicherosBinarios/src/main/java/org/example/MP3.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evaluables/PAU MACIÀ/FicherosBinarios/src/main/java/org/example/Main.java" beforeDir="false" />
+    </list>
+    <!--<list default="true" id="8e3584d0-0c3a-4027-964f-02de31a579e0" name="Changes" comment="" />-->
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -16,10 +28,14 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
+  </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 0
+  &quot;associatedIndex&quot;: 6
 }</component>
-  <component name="ProjectId" id="2VlA7TkE9kvLAfiBa52RhVDFzpA" />
+  <component name="ProjectId" id="2VlAAMTG6RHaN1BHHi2rFS2p6lh" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -29,17 +45,21 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "D:/ESTUDIOS/2DAM/Acceso a Datos/AccesoDatos"
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/34635/IdeaProjects/AccesoDatos-UD01-22-23",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.importing"
+    <!--"last_opened_file_path": "D:/ESTUDIOS/2DAM/Acceso a Datos/AccesoDatos"-->
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="8e3584d0-0c3a-4027-964f-02de31a579e0" name="Changes" comment="" />
-      <created>1695400125221</created>
+      <changelist id="52b836aa-d50e-4a95-b505-12f8d2c30654" name="Changes" comment="" />
+      <created>1695400148357</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1695400125221</updated>
+      <updated>1695400148357</updated>
     </task>
     <servers />
   </component>

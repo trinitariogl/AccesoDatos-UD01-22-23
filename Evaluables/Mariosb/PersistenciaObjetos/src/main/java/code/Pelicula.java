@@ -2,16 +2,16 @@ package code;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.List;
 
 public class Pelicula implements Serializable {
     private String titulo;
-    private ArrayList<String> actores;
-    private ArrayList<String> directores;
+    private List<String> actores;
+    private List<String> directores;
     private LocalDate fechaSalida;
     private String formato;
 
-    public Pelicula(String titulo, ArrayList<String> actores, ArrayList<String> directores, LocalDate fechaSalida, String formato) {
+    public Pelicula(String titulo, List<String> actores, List<String> directores, LocalDate fechaSalida, String formato) {
         this.titulo = titulo;
         this.actores = actores;
         this.directores = directores;
@@ -30,19 +30,19 @@ public class Pelicula implements Serializable {
         this.titulo = titulo;
     }
 
-    public ArrayList<String> getActores() {
+    public List<String> getActores() {
         return actores;
     }
 
-    public void setActores(ArrayList<String> actores) {
+    public void setActores(List<String> actores) {
         this.actores = actores;
     }
 
-    public ArrayList<String> getDirectores() {
+    public List<String> getDirectores() {
         return directores;
     }
 
-    public void setDirectores(ArrayList<String> directores) {
+    public void setDirectores(List<String> directores) {
         this.directores = directores;
     }
 
@@ -62,14 +62,12 @@ public class Pelicula implements Serializable {
         this.formato = formato;
     }
 
-    @Override
-    public String toString() {
-        return "Pelicula{" +
-                "titulo='" + titulo + '\'' +
-                ", actores=" + actores +
-                ", directores=" + directores +
-                ", fechaSalida=" + fechaSalida +
-                ", formato='" + formato + '\'' +
-                '}';
+    public String visualizar() {
+        return "\nPelicula: " +
+                "\nTitulo -> " + titulo +
+                "\nActores -> " + actores +
+                "\nDirectores -> " + directores +
+                "\nFechaSalida -> " + fechaSalida +
+                "\nFormato -> " + formato;
     }
 }
